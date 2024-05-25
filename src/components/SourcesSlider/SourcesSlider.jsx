@@ -34,7 +34,7 @@ const SourcesSlider = (props) => {
   return (
     <div
       id="companies-container"
-      className="flex flex-col gap-8 overflow-x-hidden m-5 md:m-20"
+      className="flex flex-col gap-8 overflow-x-hidden m-20 md:mt-8 md:ml-5 md:mr-5 md:mb-5"
     >
       <div id="companies-title" className="flex justify-center gap-2">
         <span className="font-medium">NEWS SUPPORTED BY THESE SOURCES</span>
