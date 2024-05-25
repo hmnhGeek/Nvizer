@@ -1,0 +1,82 @@
+import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+
+function Header(props) {
+  const [hamMenu, setHamMenu] = useState("hidden");
+
+  return (
+    <nav className="p-3 flex bg-white justify-between items-center">
+      <a href="#" id="brand" className="flex gap-2 items-center">
+        {/* <img className="object-cover max-w-12 max-h-12" /> */}
+        <span className="text-lg font-medium font-display">Nvizer</span>
+      </a>
+      <div className="hidden md:flex gap-12">
+        <a href="#" className="font-medium hover:text-primary">
+          Home
+        </a>
+        <a href="#" className="font-medium hover:text-primary">
+          Top Headlines
+        </a>
+        <a href="#" className="font-medium hover:text-primary">
+          Weather
+        </a>
+      </div>
+      <div className="flex gap-2">
+        <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
+          Login
+        </button>
+        <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
+          Sign Up
+        </button>
+      </div>
+      <button className="flex md:hidden" onClick={() => setHamMenu("")}>
+        <FontAwesomeIcon className="text-gray-600" icon={faBars} />
+      </button>
+
+      <div className={`fixed z-10 md:hidden ${hamMenu} bg-white inset-0 p-3`}>
+        <div className="flex justify-between">
+          <a href="#" id="brand" className="flex gap-2 items-center">
+            {/* <img className="object-cover max-w-12 max-h-12" /> */}
+            <span className="text-lg font-medium font-display">Nvizer</span>
+          </a>
+          <button
+            className="flex md:hidden"
+            onClick={() => setHamMenu("hidden")}
+          >
+            <FontAwesomeIcon className="text-gray-600" icon={faXmark} />
+          </button>
+        </div>
+        <div className="mt-6">
+          <a
+            href="#"
+            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          >
+            Home
+          </a>
+          <a
+            href="#"
+            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          >
+            Top Headlines
+          </a>
+          <a
+            href="#"
+            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          >
+            Weather
+          </a>
+        </div>
+        <div className="h-[1px] bg-gray-300"></div>
+        <button className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+          Login
+        </button>
+        <button className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+          Sign Up
+        </button>
+      </div>
+    </nav>
+  );
+}
+
+export default Header;
