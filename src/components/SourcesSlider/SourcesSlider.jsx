@@ -5,6 +5,9 @@ import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
 
 const SourcesSlider = (props) => {
+  const [sources, setSources] = useState([]);
+  const [sourceLinks, setSourceLinks] = useState([]);
+
   function divideArrayIntoKParts(arr, k) {
     const result = [[], [], [], []];
     const partSize = Math.ceil(arr.length / k);
@@ -16,17 +19,22 @@ const SourcesSlider = (props) => {
     return result;
   }
 
-  const [sources, setSources] = useState([]);
-
   useEffect(() => {
     Api(`/top-headlines/sources?apiKey=${conf.apiKey}`, "get").then(
-      (response) =>
+      (response) => {
         setSources(
           divideArrayIntoKParts(
             response.data.sources.map((x) => x.name),
             5
           )
-        )
+        );
+        setSourceLinks(
+          divideArrayIntoKParts(
+            response.data.sources.map((x) => x.url),
+            5
+          )
+        );
+      }
     );
   }, []);
 
@@ -45,6 +53,7 @@ const SourcesSlider = (props) => {
             divId={source}
             sources={source}
             reverseScroll={index % 2 === 0}
+            to={sourceLinks[index]}
           />
         ))}
       </div>
