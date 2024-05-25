@@ -22,7 +22,7 @@ const SourcesSlider = (props) => {
     Api(`/top-headlines/sources?apiKey=${conf.apiKey}`, "get").then(
       (response) =>
         setSources(
-          divideArrayIntoFourParts(
+          divideArrayIntoKParts(
             response.data.sources.map((x) => x.name),
             5
           )
