@@ -5,7 +5,7 @@ import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
 
 const SourcesSlider = (props) => {
-  function divideArrayIntoFourParts(arr, k) {
+  function divideArrayIntoKParts(arr, k) {
     const result = [[], [], [], []];
     const partSize = Math.ceil(arr.length / k);
 
