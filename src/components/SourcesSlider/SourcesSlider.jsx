@@ -8,8 +8,11 @@ const SourcesSlider = (props) => {
   const [sources, setSources] = useState([]);
   const [sourceLinks, setSourceLinks] = useState([]);
 
-  function divideArrayIntoKParts(arr, k) {
-    const result = [[], [], [], []];
+  const [src, setSrc] = useState([]);
+  const [srcLinks, setSrcLinks] = useState([]);
+
+  function divideArrayIntoKParts(arr, k = 4) {
+    const result = Array(k).fill([]);
     const partSize = Math.ceil(arr.length / k);
 
     for (let i = 0; i < k; i++) {
@@ -21,24 +24,46 @@ const SourcesSlider = (props) => {
 
   useEffect(() => {
     Api(
-      `/top-headlines?category=general&max=100&apikey=${conf.apiKey}`,
+      `/top-headlines?category=general&lang=en&max=100&apikey=${conf.apiKey}`,
       "get"
     ).then((response) => {
       let articles = response.data.articles;
-      setSources(
-        divideArrayIntoKParts(
-          articles.map((article) => article.source.name),
-          2
-        )
-      );
-      setSourceLinks(
-        divideArrayIntoKParts(
-          articles.map((article) => article.source.url),
-          2
-        )
-      );
+      setSrc((c) => [...c, ...articles.map((article) => article.source.name)]);
+      setSrcLinks((c) => [
+        ...c,
+        ...articles.map((article) => article.source.url),
+      ]);
+    });
+
+    Api(
+      `/top-headlines?category=world&lang=en&max=100&apikey=${conf.apiKey}`,
+      "get"
+    ).then((response) => {
+      let articles = response.data.articles;
+      setSrc((c) => [...c, ...articles.map((article) => article.source.name)]);
+      setSrcLinks((c) => [
+        ...c,
+        ...articles.map((article) => article.source.url),
+      ]);
+    });
+
+    Api(
+      `/top-headlines?category=nation&lang=en&max=100&apikey=${conf.apiKey}`,
+      "get"
+    ).then((response) => {
+      let articles = response.data.articles;
+      setSrc((c) => [...c, ...articles.map((article) => article.source.name)]);
+      setSrcLinks((c) => [
+        ...c,
+        ...articles.map((article) => article.source.url),
+      ]);
     });
   }, []);
+
+  useEffect(() => {
+    setSources(divideArrayIntoKParts(src, 4));
+    setSourceLinks(divideArrayIntoKParts(srcLinks, 4));
+  }, [srcLinks, src]);
 
   if (sources.length === 0) return null;
   return (
