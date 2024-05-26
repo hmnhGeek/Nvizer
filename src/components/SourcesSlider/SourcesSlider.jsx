@@ -8,8 +8,11 @@ const SourcesSlider = (props) => {
   const [sources, setSources] = useState([]);
   const [sourceLinks, setSourceLinks] = useState([]);
 
-  function divideArrayIntoKParts(arr, k) {
-    const result = [[], [], [], []];
+  const [src, setSrc] = useState([]);
+  const [srcLinks, setSrcLinks] = useState([]);
+
+  function divideArrayIntoKParts(arr, k = 4) {
+    const result = Array(k).fill([]);
     const partSize = Math.ceil(arr.length / k);
 
     for (let i = 0; i < k; i++) {
@@ -20,23 +23,25 @@ const SourcesSlider = (props) => {
   }
 
   useEffect(() => {
-    Api(`/top-headlines/sources?apiKey=${conf.apiKey}`, "get").then(
-      (response) => {
-        setSources(
-          divideArrayIntoKParts(
-            response.data.sources.map((x) => x.name),
-            5
-          )
-        );
-        setSourceLinks(
-          divideArrayIntoKParts(
-            response.data.sources.map((x) => x.url),
-            5
-          )
-        );
-      }
-    );
+    Api(`/top-headlines?category=general&lang=en&apikey=${conf.apiKey}`, "get")
+      .then((response) => {
+        let articles = response.data.articles;
+        setSrc((c) => [
+          ...c,
+          ...articles.map((article) => article.source.name),
+        ]);
+        setSrcLinks((c) => [
+          ...c,
+          ...articles.map((article) => article.source.url),
+        ]);
+      })
+      .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    setSources(divideArrayIntoKParts([...new Set([...src])], 1));
+    setSourceLinks(divideArrayIntoKParts([...new Set([...srcLinks])], 1));
+  }, [srcLinks, src]);
 
   if (sources.length === 0) return null;
   return (
@@ -45,7 +50,7 @@ const SourcesSlider = (props) => {
       className="flex flex-col gap-8 overflow-x-hidden m-20 md:mt-8 md:ml-5 md:mr-5 md:mb-5"
     >
       <div id="companies-title" className="flex justify-center gap-2">
-        <span className="font-medium">NEWS SUPPORTED BY THESE SOURCES</span>
+        <span className="font-medium">SOME OF OUR SOURCES FOR NEWS</span>
       </div>
       <div id="companies-lines-group" className="flex flex-col gap-4">
         {sources.map((source, index) => (
