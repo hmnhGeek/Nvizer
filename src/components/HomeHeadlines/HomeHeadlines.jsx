@@ -19,7 +19,7 @@ const HomeHeadlines = () => {
   return (
     <div
       id="general-headlines-container"
-      className="flex flex-col overflow-x-hidden m-5"
+      className="flex flex-col overflow-x-hidden m-2"
     >
       <div id="companies-title" className="flex justify-center gap-2">
         <span className="font-medium">GENERAL HEADLINES</span>
