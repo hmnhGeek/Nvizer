@@ -17,8 +17,16 @@ const HomeHeadlines = () => {
 
   if (generalArticles.length === 0) return null;
   return (
-    <div className="flex justify-center items-center m-8 overflow-x:hidden bg-gray-100">
-      <Carousel articles={generalArticles} />
+    <div
+      id="general-headlines-container"
+      className="flex flex-col overflow-x-hidden m-5"
+    >
+      <div id="companies-title" className="flex justify-center gap-2">
+        <span className="font-medium">GENERAL HEADLINES</span>
+      </div>
+      <div className="flex justify-center items-center m-8 overflow-x:hidden">
+        <Carousel articles={generalArticles} />
+      </div>
     </div>
   );
 };
