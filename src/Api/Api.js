@@ -6,7 +6,7 @@ const Api = (
   method = "get",
   data = null,
   forceUrl = false,
-  proxyEnabled = true
+  proxyEnabled = false
 ) => {
   if (!forceUrl && !proxyEnabled) {
     url = conf.apiBaseUrl + url;
