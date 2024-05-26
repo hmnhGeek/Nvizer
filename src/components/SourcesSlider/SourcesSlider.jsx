@@ -23,46 +23,52 @@ const SourcesSlider = (props) => {
   }
 
   useEffect(() => {
-    Api(
-      `/top-headlines?category=general&lang=en&apikey=${conf.apiKey}`,
-      "get"
-    ).then((response) => {
-      let articles = response.data.articles;
-      setSrc((c) => [...c, ...articles.map((article) => article.source.name)]);
-      setSrcLinks((c) => [
-        ...c,
-        ...articles.map((article) => article.source.url),
-      ]);
-    });
+    Api(`/top-headlines?category=general&lang=en&apikey=${conf.apiKey}`, "get")
+      .then((response) => {
+        let articles = response.data.articles;
+        setSrc((c) => [
+          ...c,
+          ...articles.map((article) => article.source.name),
+        ]);
+        setSrcLinks((c) => [
+          ...c,
+          ...articles.map((article) => article.source.url),
+        ]);
+      })
+      .catch((err) => console.log(err));
 
-    Api(
-      `/top-headlines?category=world&lang=en&apikey=${conf.apiKey}`,
-      "get"
-    ).then((response) => {
-      let articles = response.data.articles;
-      setSrc((c) => [...c, ...articles.map((article) => article.source.name)]);
-      setSrcLinks((c) => [
-        ...c,
-        ...articles.map((article) => article.source.url),
-      ]);
-    });
+    // Api(`/top-headlines?category=world&lang=en&apikey=${conf.apiKey}`, "get")
+    //   .then((response) => {
+    //     let articles = response.data.articles;
+    //     setSrc((c) => [
+    //       ...c,
+    //       ...articles.map((article) => article.source.name),
+    //     ]);
+    //     setSrcLinks((c) => [
+    //       ...c,
+    //       ...articles.map((article) => article.source.url),
+    //     ]);
+    //   })
+    //   .catch((err) => console.log(err));
 
-    Api(
-      `/top-headlines?category=nation&lang=en&apikey=${conf.apiKey}`,
-      "get"
-    ).then((response) => {
-      let articles = response.data.articles;
-      setSrc((c) => [...c, ...articles.map((article) => article.source.name)]);
-      setSrcLinks((c) => [
-        ...c,
-        ...articles.map((article) => article.source.url),
-      ]);
-    });
+    // Api(`/top-headlines?category=nation&lang=en&apikey=${conf.apiKey}`, "get")
+    //   .then((response) => {
+    //     let articles = response.data.articles;
+    //     setSrc((c) => [
+    //       ...c,
+    //       ...articles.map((article) => article.source.name),
+    //     ]);
+    //     setSrcLinks((c) => [
+    //       ...c,
+    //       ...articles.map((article) => article.source.url),
+    //     ]);
+    //   })
+    //   .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
-    setSources(divideArrayIntoKParts([...new Set([...src])], 4));
-    setSourceLinks(divideArrayIntoKParts([...new Set([...srcLinks])], 4));
+    setSources(divideArrayIntoKParts([...new Set([...src])], 1));
+    setSourceLinks(divideArrayIntoKParts([...new Set([...srcLinks])], 1));
   }, [srcLinks, src]);
 
   if (sources.length === 0) return null;
@@ -72,7 +78,7 @@ const SourcesSlider = (props) => {
       className="flex flex-col gap-8 overflow-x-hidden m-20 md:mt-8 md:ml-5 md:mr-5 md:mb-5"
     >
       <div id="companies-title" className="flex justify-center gap-2">
-        <span className="font-medium">NEWS SUPPORTED BY THESE SOURCES</span>
+        <span className="font-medium">SOME OF OUR SOURCES FOR NEWS</span>
       </div>
       <div id="companies-lines-group" className="flex flex-col gap-4">
         {sources.map((source, index) => (
