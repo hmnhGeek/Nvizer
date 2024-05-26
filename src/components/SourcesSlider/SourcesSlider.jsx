@@ -36,34 +36,6 @@ const SourcesSlider = (props) => {
         ]);
       })
       .catch((err) => console.log(err));
-
-    // Api(`/top-headlines?category=world&lang=en&apikey=${conf.apiKey}`, "get")
-    //   .then((response) => {
-    //     let articles = response.data.articles;
-    //     setSrc((c) => [
-    //       ...c,
-    //       ...articles.map((article) => article.source.name),
-    //     ]);
-    //     setSrcLinks((c) => [
-    //       ...c,
-    //       ...articles.map((article) => article.source.url),
-    //     ]);
-    //   })
-    //   .catch((err) => console.log(err));
-
-    // Api(`/top-headlines?category=nation&lang=en&apikey=${conf.apiKey}`, "get")
-    //   .then((response) => {
-    //     let articles = response.data.articles;
-    //     setSrc((c) => [
-    //       ...c,
-    //       ...articles.map((article) => article.source.name),
-    //     ]);
-    //     setSrcLinks((c) => [
-    //       ...c,
-    //       ...articles.map((article) => article.source.url),
-    //     ]);
-    //   })
-    //   .catch((err) => console.log(err));
   }, []);
 
   useEffect(() => {
