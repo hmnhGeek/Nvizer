@@ -31,7 +31,7 @@ const Carousel = ({ articles }) => {
     <div
       className="flex overflow-x-auto whitespace-nowrap"
       ref={carouselRef}
-      style={{ scrollBehavior: "smooth" }}
+      style={{ overflowX: "hidden" }} // Hide horizontal scrollbar
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

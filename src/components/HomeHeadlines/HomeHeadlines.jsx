@@ -17,7 +17,7 @@ const HomeHeadlines = () => {
 
   if (generalArticles.length === 0) return null;
   return (
-    <div className="flex justify-center items-center m-8 bg-gray-100">
+    <div className="flex justify-center items-center m-8 overflow-x:hidden bg-gray-100">
       <Carousel articles={generalArticles} />
     </div>
   );
