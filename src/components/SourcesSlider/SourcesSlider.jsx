@@ -47,11 +47,13 @@ const SourcesSlider = (props) => {
   return (
     <div
       id="companies-container"
-      className="flex flex-col gap-8 overflow-x-hidden m-20 md:mt-8 md:ml-5 md:mr-5 md:mb-5"
+      className="flex flex-col gap-8 overflow-x-hidden m-8 md:mt-8 md:ml-5 md:mr-5 md:mb-5"
     >
-      <div id="companies-title" className="flex justify-center gap-2">
-        <span className="font-medium">SOME OF OUR SOURCES FOR NEWS</span>
-      </div>
+      {sources.length > 0 && (
+        <div id="companies-title" className="flex justify-center gap-2">
+          <span className="font-medium">SOME OF OUR SOURCES FOR NEWS</span>
+        </div>
+      )}
       <div id="companies-lines-group" className="flex flex-col gap-4">
         {sources.map((source, index) => (
           <AnimatedBanner
