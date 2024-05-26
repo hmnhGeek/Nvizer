@@ -18,8 +18,6 @@ const Api = (
     url = `${conf.proxyUrl}/${url}`;
   }
 
-  console.log("Calling url:", url);
-
   return axios({
     method,
     url,
