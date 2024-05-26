@@ -4,11 +4,22 @@ import NewsCard from "../NewsCard/NewsCard";
 const Carousel = ({ articles }) => {
   const carouselRef = useRef(null);
   let scrollInterval = null; // Declare scrollInterval variable
+  let direction = 1; // Direction of scrolling
 
   const startScroll = () => {
     scrollInterval = setInterval(() => {
       if (carouselRef.current) {
-        carouselRef.current.scrollLeft += 1; // Adjust the scroll speed as needed
+        carouselRef.current.scrollLeft += direction; // Adjust the scroll speed as needed
+        // Check if reached end of the carousel
+        if (
+          direction === 1 &&
+          carouselRef.current.scrollLeft >=
+            carouselRef.current.scrollWidth - carouselRef.current.clientWidth
+        ) {
+          direction = -1; // Change direction to scroll back
+        } else if (direction === -1 && carouselRef.current.scrollLeft === 0) {
+          direction = 1; // Change direction to scroll forward
+        }
       }
     }, 20); // Adjust the interval as needed
   };
