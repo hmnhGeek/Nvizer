@@ -68,3 +68,86 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+# Carousel Component
+
+The Carousel component is a horizontal scrolling container that displays news articles using the NewsCard component. It automatically scrolls through the articles in a loop, allowing users to view multiple articles without manual interaction.
+
+## How it Works
+
+The Carousel component utilizes JavaScript and CSS to achieve the scrolling functionality.
+
+### JavaScript Concepts
+
+#### useRef Hook
+
+The `useRef` hook is used to create a reference to the DOM element representing the carousel container. This allows us to access and manipulate the container's scroll properties.
+
+```jsx
+const carouselRef = useRef(null);
+```
+
+#### useEffect Hook
+
+The `useEffect` hook is used to start the automatic scrolling when the component mounts. It also cleans up the scroll interval when the component unmounts to prevent memory leaks.
+
+```jsx
+useEffect(() => {
+  startScroll();
+
+  return () => clearInterval(scrollInterval);
+}, []);
+```
+
+#### setInterval
+
+The `setInterval` function is used to continuously scroll the carousel at regular intervals. It increments or decrements the `scrollLeft` property of the carousel container based on the scrolling direction.
+
+```jsx
+const startScroll = () => {
+  scrollInterval = setInterval(() => {
+    // Scroll the carousel container
+    carouselRef.current.scrollLeft += direction;
+    // Check if reached end of the carousel
+    if (
+      direction === 1 &&
+      carouselRef.current.scrollLeft >=
+        carouselRef.current.scrollWidth - carouselRef.current.clientWidth
+    ) {
+      direction = -1; // Change direction to scroll back
+    } else if (direction === -1 && carouselRef.current.scrollLeft === 0) {
+      direction = 1; // Change direction to scroll forward
+    }
+  }, 20);
+};
+```
+
+### CSS Concepts
+
+#### overflow-x Property
+
+The `overflow-x` property is set to "hidden" to hide the horizontal scrollbar while still allowing horizontal scrolling within the container.
+
+```jsx
+style={{ overflowX: "hidden" }}
+```
+
+#### whitespace-nowrap Class
+
+The `whitespace-nowrap` class is applied to the carousel container to prevent line wrapping of the articles and maintain them in a single row.
+
+```jsx
+className = "flex overflow-x-auto whitespace-nowrap";
+```
+
+## How to Use
+
+To use the Carousel component, simply pass an array of news articles as props. Each news article should be an object containing relevant information such as title, description, image, etc.
+
+```jsx
+<Carousel articles={newsArticles} />
+```
+
+## Customization
+
+You can customize the scrolling behavior and appearance of the Carousel component by adjusting the scroll speed, interval, and CSS styles according to your requirements.
