@@ -24,7 +24,7 @@ const SourcesSlider = (props) => {
 
   useEffect(() => {
     Api(
-      `/top-headlines?category=general&lang=en&max=100&apikey=${conf.apiKey}`,
+      `/top-headlines?category=general&lang=en&apikey=${conf.apiKey}`,
       "get"
     ).then((response) => {
       let articles = response.data.articles;
@@ -36,7 +36,7 @@ const SourcesSlider = (props) => {
     });
 
     Api(
-      `/top-headlines?category=world&lang=en&max=100&apikey=${conf.apiKey}`,
+      `/top-headlines?category=world&lang=en&apikey=${conf.apiKey}`,
       "get"
     ).then((response) => {
       let articles = response.data.articles;
@@ -48,7 +48,7 @@ const SourcesSlider = (props) => {
     });
 
     Api(
-      `/top-headlines?category=nation&lang=en&max=100&apikey=${conf.apiKey}`,
+      `/top-headlines?category=nation&lang=en&apikey=${conf.apiKey}`,
       "get"
     ).then((response) => {
       let articles = response.data.articles;
@@ -61,8 +61,8 @@ const SourcesSlider = (props) => {
   }, []);
 
   useEffect(() => {
-    setSources(divideArrayIntoKParts(src, 4));
-    setSourceLinks(divideArrayIntoKParts(srcLinks, 4));
+    setSources(divideArrayIntoKParts([...new Set([...src])], 4));
+    setSourceLinks(divideArrayIntoKParts([...new Set([...srcLinks])], 4));
   }, [srcLinks, src]);
 
   if (sources.length === 0) return null;
