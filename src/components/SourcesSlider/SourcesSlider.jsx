@@ -20,22 +20,24 @@ const SourcesSlider = (props) => {
   }
 
   useEffect(() => {
-    Api(`/top-headlines/sources?apiKey=${conf.apiKey}`, "get").then(
-      (response) => {
-        setSources(
-          divideArrayIntoKParts(
-            response.data.sources.map((x) => x.name),
-            5
-          )
-        );
-        setSourceLinks(
-          divideArrayIntoKParts(
-            response.data.sources.map((x) => x.url),
-            5
-          )
-        );
-      }
-    );
+    Api(
+      `/top-headlines?category=general&max=100&apikey=${conf.apiKey}`,
+      "get"
+    ).then((response) => {
+      let articles = response.data.articles;
+      setSources(
+        divideArrayIntoKParts(
+          articles.map((article) => article.source.name),
+          2
+        )
+      );
+      setSourceLinks(
+        divideArrayIntoKParts(
+          articles.map((article) => article.source.url),
+          2
+        )
+      );
+    });
   }, []);
 
   if (sources.length === 0) return null;
