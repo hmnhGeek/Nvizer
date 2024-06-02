@@ -1,26 +1,46 @@
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
+  const location = useLocation();
+  const isTopHeadlinesActive = location.pathname.startsWith("/top-headlines");
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
-      <a href="#" id="brand" className="flex gap-2 items-center">
+      <NavLink to="/" id="brand" className="flex gap-2 items-center">
         {/* <img className="object-cover max-w-12 max-h-12" /> */}
         <span className="text-lg font-medium font-display">Nvizer</span>
-      </a>
+      </NavLink>
       <div className="hidden md:flex gap-12">
-        <a href="#" className="font-medium hover:text-primary">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+          }
+        >
           Home
-        </a>
-        <a href="#" className="font-medium hover:text-primary">
+        </NavLink>
+        <NavLink
+          to="/top-headlines/general"
+          className={() =>
+            `font-medium ${
+              isTopHeadlinesActive ? "text-primary" : ""
+            } hover:text-primary`
+          }
+        >
           Top Headlines
-        </a>
-        <a href="#" className="font-medium hover:text-primary">
+        </NavLink>
+        {/* <NavLink
+          to="/weather"
+          className={({ isActive }) =>
+            `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+          }
+        >
           Weather
-        </a>
+        </NavLink> */}
       </div>
       <div className="flex gap-2">
         <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
@@ -36,10 +56,15 @@ function Header(props) {
 
       <div className={`fixed z-10 md:hidden ${hamMenu} bg-white inset-0 p-3`}>
         <div className="flex justify-between">
-          <a href="#" id="brand" className="flex gap-2 items-center">
+          <NavLink
+            to="/"
+            onClick={() => setHamMenu("hidden")}
+            id="brand"
+            className="flex gap-2 items-center"
+          >
             {/* <img className="object-cover max-w-12 max-h-12" /> */}
             <span className="text-lg font-medium font-display">Nvizer</span>
-          </a>
+          </NavLink>
           <button
             className="flex md:hidden"
             onClick={() => setHamMenu("hidden")}
@@ -48,24 +73,34 @@ function Header(props) {
           </button>
         </div>
         <div className="mt-6">
-          <a
-            href="#"
-            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          <NavLink
+            to="/"
+            onClick={() => setHamMenu("hidden")}
+            className={({ isActive }) =>
+              `font-medium m-3 p-3 ${
+                isActive ? "text-primary" : ""
+              } hover:bg-gray-50 block rounded-lg`
+            }
           >
             Home
-          </a>
-          <a
-            href="#"
-            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          </NavLink>
+          <NavLink
+            to="/top-headlines/general"
+            onClick={() => setHamMenu("hidden")}
+            className={() =>
+              `font-medium m-3 p-3 ${
+                isTopHeadlinesActive ? "text-primary" : ""
+              } hover:bg-gray-50 block rounded-lg`
+            }
           >
             Top Headlines
-          </a>
-          <a
+          </NavLink>
+          {/* <a
             href="#"
             className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
           >
             Weather
-          </a>
+          </a> */}
         </div>
         <div className="h-[1px] bg-gray-300"></div>
         <button className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
