@@ -1,6 +1,7 @@
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
@@ -12,15 +13,30 @@ function Header(props) {
         <span className="text-lg font-medium font-display">Nvizer</span>
       </a>
       <div className="hidden md:flex gap-12">
-        <a href="#" className="font-medium hover:text-primary">
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+          }
+        >
           Home
-        </a>
-        <a href="#" className="font-medium hover:text-primary">
+        </NavLink>
+        <NavLink
+          to="/top-headlines"
+          className={({ isActive }) =>
+            `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+          }
+        >
           Top Headlines
-        </a>
-        <a href="#" className="font-medium hover:text-primary">
+        </NavLink>
+        <NavLink
+          to="/weather"
+          className={({ isActive }) =>
+            `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+          }
+        >
           Weather
-        </a>
+        </NavLink>
       </div>
       <div className="flex gap-2">
         <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">

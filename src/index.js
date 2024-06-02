@@ -11,12 +11,14 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout";
 import Homepage from "./pages/Homepage";
+import TopHeadlines from "./pages/TopHeadlines";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route path="" element={<Homepage />} />
+      <Route path="/top-headlines" element={<TopHeadlines />} />
     </Route>
   )
 );
