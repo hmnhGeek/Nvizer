@@ -10,10 +10,10 @@ function Header(props) {
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
-      <a href="#" id="brand" className="flex gap-2 items-center">
+      <NavLink to="/" id="brand" className="flex gap-2 items-center">
         {/* <img className="object-cover max-w-12 max-h-12" /> */}
         <span className="text-lg font-medium font-display">Nvizer</span>
-      </a>
+      </NavLink>
       <div className="hidden md:flex gap-12">
         <NavLink
           to="/"
