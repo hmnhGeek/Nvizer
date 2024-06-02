@@ -33,14 +33,14 @@ function Header(props) {
         >
           Top Headlines
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/weather"
           className={({ isActive }) =>
             `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
           }
         >
           Weather
-        </NavLink>
+        </NavLink> */}
       </div>
       <div className="flex gap-2">
         <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
@@ -80,12 +80,12 @@ function Header(props) {
           >
             Top Headlines
           </a>
-          <a
+          {/* <a
             href="#"
             className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
           >
             Weather
-          </a>
+          </a> */}
         </div>
         <div className="h-[1px] bg-gray-300"></div>
         <button className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
