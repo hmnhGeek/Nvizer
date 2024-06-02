@@ -1,10 +1,12 @@
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
+  const location = useLocation();
+  const isTopHeadlinesActive = location.pathname.startsWith("/top-headlines");
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
@@ -23,8 +25,10 @@ function Header(props) {
         </NavLink>
         <NavLink
           to="/top-headlines/general"
-          className={({ isActive }) =>
-            `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+          className={() =>
+            `font-medium ${
+              isTopHeadlinesActive ? "text-primary" : ""
+            } hover:text-primary`
           }
         >
           Top Headlines
