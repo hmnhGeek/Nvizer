@@ -22,7 +22,7 @@ function Header(props) {
           Home
         </NavLink>
         <NavLink
-          to="/top-headlines"
+          to="/top-headlines/general"
           className={({ isActive }) =>
             `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
           }
