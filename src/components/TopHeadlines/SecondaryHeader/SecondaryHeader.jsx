@@ -98,6 +98,7 @@ function SecondaryHeader(props) {
         <div className="mt-6 flex flex-col items-center">
           <NavLink
             to="/top-headlines/general"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -108,6 +109,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/world"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -118,6 +120,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/nation"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -128,6 +131,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/business"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -138,6 +142,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/technology"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -148,6 +153,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/entertainment"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -158,6 +164,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/sports"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -168,6 +175,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/science"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
@@ -178,6 +186,7 @@ function SecondaryHeader(props) {
           </NavLink>
           <NavLink
             to="/top-headlines/health"
+            onClick={() => setHamMenu("hidden")}
             className={({ isActive }) =>
               `font-medium m-3 p-3 block rounded-lg hover:bg-gray-50 ${
                 isActive ? "text-primary" : ""
