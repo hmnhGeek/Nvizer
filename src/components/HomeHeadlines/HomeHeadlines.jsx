@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
 import Carousel from "./Carousel";
+import MobileDisplay from "./MobileDisplay";
 
 const HomeHeadlines = () => {
   const [generalArticles, setGeneralArticles] = useState([]);
@@ -24,8 +25,11 @@ const HomeHeadlines = () => {
       <div id="companies-title" className="flex justify-center gap-2">
         <span className="font-medium">GENERAL HEADLINES</span>
       </div>
-      <div className="flex justify-center items-center m-8 overflow-x:hidden">
+      <div className="lg:flex hidden justify-center items-center m-8 overflow-x:hidden">
         <Carousel articles={generalArticles} />
+      </div>
+      <div className="lg:hidden flex justify-center items-center m-8 overflow-x:hidden">
+        <MobileDisplay articles={generalArticles} />
       </div>
     </div>
   );

@@ -56,10 +56,10 @@ function Header(props) {
 
       <div className={`fixed z-10 md:hidden ${hamMenu} bg-white inset-0 p-3`}>
         <div className="flex justify-between">
-          <a href="#" id="brand" className="flex gap-2 items-center">
+          <NavLink to="/" id="brand" className="flex gap-2 items-center">
             {/* <img className="object-cover max-w-12 max-h-12" /> */}
             <span className="text-lg font-medium font-display">Nvizer</span>
-          </a>
+          </NavLink>
           <button
             className="flex md:hidden"
             onClick={() => setHamMenu("hidden")}
@@ -68,18 +68,26 @@ function Header(props) {
           </button>
         </div>
         <div className="mt-6">
-          <a
-            href="#"
-            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              `font-medium m-3 p-3 ${
+                isActive ? "text-primary" : ""
+              } hover:bg-gray-50 block rounded-lg`
+            }
           >
             Home
-          </a>
-          <a
-            href="#"
-            className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
+          </NavLink>
+          <NavLink
+            to="/top-headlines/general"
+            className={() =>
+              `font-medium m-3 p-3 ${
+                isTopHeadlinesActive ? "text-primary" : ""
+              } hover:bg-gray-50 block rounded-lg`
+            }
           >
             Top Headlines
-          </a>
+          </NavLink>
           {/* <a
             href="#"
             className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"
