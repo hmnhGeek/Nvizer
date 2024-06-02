@@ -3,12 +3,28 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import Layout from "./Layout";
+import Homepage from "./pages/Homepage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Layout />}>
+      <Route path="" element={<Homepage />} />
+    </Route>
+  )
+);
+
 root.render(
   <React.StrictMode>
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-orange-50 to-transparent">
-      <App />
+      <RouterProvider router={router} />
     </div>
   </React.StrictMode>
 );
