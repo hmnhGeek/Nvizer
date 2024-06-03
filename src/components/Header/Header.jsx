@@ -2,6 +2,7 @@ import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import logo from "../../images/logo.png";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
@@ -11,7 +12,11 @@ function Header(props) {
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
       <NavLink to="/" id="brand" className="flex gap-2 items-center">
-        {/* <img className="object-cover max-w-12 max-h-12" /> */}
+        <img
+          src={logo}
+          alt="brand-logo"
+          className="object-cover max-w-12 max-h-12"
+        />
         <span className="text-lg font-medium font-display">Nvizer</span>
       </NavLink>
       <div className="hidden md:flex gap-12">
