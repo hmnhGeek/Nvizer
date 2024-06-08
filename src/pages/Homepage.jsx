@@ -11,6 +11,11 @@ const Homepage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [clearSearch, setClearSearch] = useState(false);
 
+  const clearSearchFn = (e) => {
+    e.preventDefault();
+    setClearSearch(true);
+  };
+
   return (
     <>
       <div className="w-full px-8 pt-8 lg:px-96">
@@ -27,16 +32,22 @@ const Homepage = () => {
       ) : (
         <div
           id="general-headlines-container"
-          className="flex flex-col overflow-x-hidden m-2"
+          className="flex flex-col overflow-x-hidden m-2 justify-center items-center"
         >
           <div id="companies-title" className="flex justify-center gap-2 mt-5">
             <span className="font-medium">
-              Showing results for <i>{searchQuery}</i>{" "}
-              <FontAwesomeIcon
-                onClick={() => setClearSearch(true)}
-                className="text-gray-600"
-                icon={faXmark}
-              />
+              Showing results for <i className="text-primary">{searchQuery}</i>
+              &nbsp;&nbsp;
+              <button
+                onClick={clearSearchFn}
+                className="items-center border border-gray-600 p-1 rounded-lg hover:border-red-800 hover:text-red-800 bg-transparent"
+              >
+                <FontAwesomeIcon
+                  // className="text-gray-600 hover:text-red-800"
+                  icon={faXmark}
+                />{" "}
+                Clear
+              </button>
             </span>
           </div>
           <div className="flex flex-wrap justify-center items-center m-8 overflow-x:hidden">

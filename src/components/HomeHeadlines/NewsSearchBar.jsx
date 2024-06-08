@@ -27,11 +27,16 @@ const NewsSearchBar = (props) => {
 
   useEffect(() => {
     if (clearSearch) {
-      setSearchValue((c) => "");
+      setSearchValue("");
       parentSearchResultsStateSetter([]);
       searchQuerySetter("");
     }
-  }, [clearSearch]);
+  }, [
+    clearSearch,
+    setSearchValue,
+    parentSearchResultsStateSetter,
+    searchQuerySetter,
+  ]);
 
   return (
     <div className="flex relative bg-transparent p-2 rounded border-2 justify-center items-center border-gray-400">
@@ -39,6 +44,7 @@ const NewsSearchBar = (props) => {
         type="text"
         className="ml-2 bg-transparent w-full focus:outline-none"
         placeholder="Search for news..."
+        value={searchValue}
         onChange={(e) => setSearchValue(e.target.value)}
       />
       <button
