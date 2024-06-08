@@ -62,8 +62,6 @@ const Homepage = () => {
           </div>
         </div>
       )}
-
-      {/* <SourcesSlider /> */}
     </>
   );
 };
