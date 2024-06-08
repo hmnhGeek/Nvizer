@@ -1,14 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import Api from "../../Api/Api";
+import { conf } from "../../conf/conf";
 
-const NewsSearchBar = () => {
+const NewsSearchBar = (props) => {
+  const [searchValue, setSearchValue] = useState("");
+  const { parentSearchResultsStateSetter, searchQuerySetter } = props;
+
+  const beginSearch = () => {
+    parentSearchResultsStateSetter([]);
+    searchQuerySetter(searchValue);
+    // API call on searchValue.
+    if (searchValue.trim() !== "") {
+      Api(`/search?q=${searchValue}&apikey=${conf.apiKey}`)
+        .then((response) =>
+          parentSearchResultsStateSetter(response.data.articles)
+        )
+        .catch((e) => console.log(e));
+    }
+  };
+
   return (
     <div className="flex relative bg-transparent p-2 rounded border-2 justify-center items-center border-gray-400">
       <input
         type="text"
         className="ml-2 bg-transparent w-full focus:outline-none"
         placeholder="Search for news..."
+        onChange={(e) => setSearchValue(e.target.value)}
       />
-      <button className="flex gap-2 items-center border border-gray-600 px-3 py-2 rounded-lg hover:border-gray-800 bg-gray-600 text-white">
+      <button
+        onClick={beginSearch}
+        className="flex gap-2 items-center border border-gray-600 px-3 py-2 rounded-lg hover:border-gray-800 bg-gray-600 text-white"
+      >
         <svg
           className="h-5 w-5 absolute left-0 ml-2"
           xmlns="http://www.w3.org/2000/svg"
