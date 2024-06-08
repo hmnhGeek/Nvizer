@@ -13,19 +13,30 @@ const NewsSearchBar = (props) => {
   } = props;
 
   const beginSearch = () => {
-    parentSearchResultsStateSetter([]);
-    searchQuerySetter(searchValue);
     clearSearchSetter(false);
 
     if (searchValue.trim() !== "") {
-      Api(`/search?q=${searchValue}&apikey=${conf.apiKey}`)
-        .then((response) => {
-          parentSearchResultsStateSetter(response.data.articles);
-
-          if (response.data.articles.length === 0)
-            toast.error(`Could not find any results for ${searchValue}.`);
-        })
-        .catch((e) => console.log(e));
+      toast.promise(
+        Api(`/search?q=${searchValue}&apikey=${conf.apiKey}`)
+          .then((response) => {
+            if (response.data.articles.length === 0) {
+              throw new Error("No results found");
+            }
+            parentSearchResultsStateSetter(response.data.articles);
+            searchQuerySetter(searchValue);
+          })
+          .catch((e) => {
+            console.log(e);
+            throw e;
+          }),
+        {
+          loading: "Searching! please wait...",
+          success: `Results found for ${searchValue}`,
+          error: `Could not find any results for ${searchValue}.`,
+        }
+      );
+    } else {
+      toast.error("Please enter valid keyword for search.");
     }
   };
 
