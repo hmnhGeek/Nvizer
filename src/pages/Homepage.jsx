@@ -3,10 +3,13 @@ import SourcesSlider from "../components/SourcesSlider/SourcesSlider";
 import HomeHeadlines from "../components/HomeHeadlines/HomeHeadlines";
 import NewsSearchBar from "../components/HomeHeadlines/NewsSearchBar";
 import NewsCard from "../components/NewsCard/NewsCard";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Homepage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [clearSearch, setClearSearch] = useState(false);
 
   return (
     <>
@@ -14,6 +17,8 @@ const Homepage = () => {
         <NewsSearchBar
           parentSearchResultsStateSetter={setSearchResults}
           searchQuerySetter={setSearchQuery}
+          clearSearch={clearSearch}
+          clearSearchSetter={setClearSearch}
         />
       </div>
       <div className="h-[1px] bg-gray-300 m-8"></div>
@@ -26,7 +31,12 @@ const Homepage = () => {
         >
           <div id="companies-title" className="flex justify-center gap-2 mt-5">
             <span className="font-medium">
-              Showing results for <i>{searchQuery}</i>
+              Showing results for <i>{searchQuery}</i>{" "}
+              <FontAwesomeIcon
+                onClick={() => setClearSearch(true)}
+                className="text-gray-600"
+                icon={faXmark}
+              />
             </span>
           </div>
           <div className="flex flex-wrap justify-center items-center m-8 overflow-x:hidden">

@@ -1,15 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
 
 const NewsSearchBar = (props) => {
   const [searchValue, setSearchValue] = useState("");
-  const { parentSearchResultsStateSetter, searchQuerySetter } = props;
+  const {
+    parentSearchResultsStateSetter,
+    searchQuerySetter,
+    clearSearch,
+    clearSearchSetter,
+  } = props;
 
   const beginSearch = () => {
     parentSearchResultsStateSetter([]);
     searchQuerySetter(searchValue);
-    // API call on searchValue.
+    clearSearchSetter(false);
+
     if (searchValue.trim() !== "") {
       Api(`/search?q=${searchValue}&apikey=${conf.apiKey}`)
         .then((response) =>
@@ -18,6 +24,14 @@ const NewsSearchBar = (props) => {
         .catch((e) => console.log(e));
     }
   };
+
+  useEffect(() => {
+    if (clearSearch) {
+      setSearchValue((c) => "");
+      parentSearchResultsStateSetter([]);
+      searchQuerySetter("");
+    }
+  }, [clearSearch]);
 
   return (
     <div className="flex relative bg-transparent p-2 rounded border-2 justify-center items-center border-gray-400">
