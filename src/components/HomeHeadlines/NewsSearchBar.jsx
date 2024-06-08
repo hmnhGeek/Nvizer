@@ -2,7 +2,7 @@ import React from "react";
 
 const NewsSearchBar = () => {
   return (
-    <div className="flex relative bg-transparent p-2 rounded border-2 border-gray-400">
+    <div className="flex relative bg-transparent p-2 rounded border-2 justify-center items-center border-gray-400">
       <svg
         className="h-5 w-5 absolute left-0 ml-2"
         xmlns="http://www.w3.org/2000/svg"
