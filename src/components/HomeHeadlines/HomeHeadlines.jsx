@@ -19,12 +19,7 @@ const HomeHeadlines = () => {
     fetchHomeHeadlines
   );
 
-  if (isLoading)
-    return (
-      <div className="flex justify-center items-center">
-        <Spinner />
-      </div>
-    );
+  if (isLoading) return <Spinner />;
   if (data.data.articles.length === 0) return null;
   return (
     <div

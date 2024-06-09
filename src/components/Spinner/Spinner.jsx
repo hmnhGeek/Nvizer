@@ -2,7 +2,7 @@ import React from "react";
 
 const Spinner = () => {
   return (
-    <>
+    <div className="fixed inset-0 flex items-center justify-center z-50">
       <svg
         className="animate-spin"
         fill="none"
@@ -23,7 +23,7 @@ const Spinner = () => {
           fill="currentColor"
         />
       </svg>
-    </>
+    </div>
   );
 };
 
