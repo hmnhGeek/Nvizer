@@ -3,20 +3,29 @@ import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
 import Carousel from "./Carousel";
 import MobileDisplay from "./MobileDisplay";
+import { useQuery } from "react-query";
+import Spinner from "../Spinner/Spinner";
+
+const fetchHomeHeadlines = async () => {
+  return await Api(
+    `/top-headlines?category=general&lang=en&apikey=${conf.apiKey}`,
+    "get"
+  );
+};
 
 const HomeHeadlines = () => {
-  const [generalArticles, setGeneralArticles] = useState([]);
+  const { isLoading, data, isError, error, isFetching } = useQuery(
+    "home-headlines",
+    fetchHomeHeadlines
+  );
 
-  useEffect(() => {
-    Api(`/top-headlines?category=general&lang=en&apikey=${conf.apiKey}`, "get")
-      .then((response) => {
-        console.log(response.data.articles);
-        setGeneralArticles(response.data.articles);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  if (generalArticles.length === 0) return null;
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  if (data.data.articles.length === 0) return null;
   return (
     <div
       id="general-headlines-container"
@@ -26,10 +35,10 @@ const HomeHeadlines = () => {
         <span className="font-medium">GENERAL HEADLINES</span>
       </div>
       <div className="lg:flex hidden justify-center items-center m-8 overflow-x:hidden">
-        <Carousel articles={generalArticles} />
+        <Carousel articles={data.data.articles} />
       </div>
       <div className="lg:hidden flex justify-center items-center m-8 overflow-x:hidden">
-        <MobileDisplay articles={generalArticles} />
+        <MobileDisplay articles={data.data.articles} />
       </div>
     </div>
   );
