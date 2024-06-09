@@ -16,7 +16,11 @@ const fetchHomeHeadlines = async () => {
 const HomeHeadlines = () => {
   const { isLoading, data, isError, error, isFetching } = useQuery(
     "home-headlines",
-    fetchHomeHeadlines
+    fetchHomeHeadlines,
+    {
+      staleTime: 1000 * 60 * 5,
+      cacheTime: 1000 * 60 * 5,
+    }
   );
 
   if (isLoading) return <Spinner />;
