@@ -31,8 +31,8 @@ const NewsSearchBar = (props) => {
           }),
         {
           loading: "Searching! please wait...",
-          success: `Results found for ${searchValue}`,
-          error: `Could not find any results for ${searchValue}.`,
+          success: `Results found for "${searchValue}".`,
+          error: `Could not find any results for "${searchValue}".`,
         }
       );
     } else {

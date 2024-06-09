@@ -20,6 +20,7 @@ import EntertainmentHeadlines from "./components/TopHeadlines/EntertainmentHeadl
 import ScienceHeadlines from "./components/TopHeadlines/ScienceHeadlines";
 import SportsHeadlines from "./components/TopHeadlines/SportsHeadlines";
 import HealthHeadlines from "./components/TopHeadlines/HealthHeadlines";
+import { QueryClientProvider, QueryClient } from "react-query";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
@@ -41,10 +42,14 @@ const router = createBrowserRouter(
   )
 );
 
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-orange-50 to-transparent">
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </div>
   </React.StrictMode>
 );

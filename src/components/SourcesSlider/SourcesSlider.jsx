@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import SourceCard from "./SourceCard";
+import React, { useEffect, useState } from "react";
 import AnimatedBanner from "./AnimatedBanner";
 import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
