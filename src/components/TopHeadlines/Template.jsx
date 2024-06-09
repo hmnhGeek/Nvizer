@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Api from "../../Api/Api";
 import { conf } from "../../conf/conf";
 import NewsCard from "../NewsCard/NewsCard";
@@ -13,7 +13,7 @@ const fetchTopHeadlinesOnTopic = async (category) => {
 };
 
 const Template = ({ title, category }) => {
-  const { isLoading, data, isError, error, isFetching } = useQuery(
+  const { isLoading, data } = useQuery(
     ["top-headlines", category],
     () => fetchTopHeadlinesOnTopic(category),
     {
