@@ -19,7 +19,7 @@ const LoginPage = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (token) {
-      navigate("/");
+      navigate("/favourites");
     }
   }, [token]);
 

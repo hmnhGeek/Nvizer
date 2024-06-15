@@ -24,6 +24,7 @@ import { QueryClientProvider, QueryClient } from "react-query";
 import LoginPage from "./pages/LoginPage";
 import TokenExpirationChecker from "./components/TokenExpirationChecker/TokenExpirationChecker";
 import { ReduxProvider } from "./redux/ReduxProvider";
+import SavedArticles from "./pages/SavedArticles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
         <Route path="health" element={<HealthHeadlines />} />
       </Route>
       <Route path="login" element={<LoginPage />} />
+      <Route path="favourites" element={<SavedArticles />} />
     </Route>
   )
 );

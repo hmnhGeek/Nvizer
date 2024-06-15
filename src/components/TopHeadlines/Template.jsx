@@ -4,6 +4,7 @@ import { conf } from "../../conf/conf";
 import NewsCard from "../NewsCard/NewsCard";
 import { useQuery } from "react-query";
 import Spinner from "../Spinner/Spinner";
+import { useSelector } from "react-redux";
 
 const fetchTopHeadlinesOnTopic = async (category) => {
   return await Api(
@@ -23,6 +24,8 @@ const Template = ({ title, category }) => {
     }
   );
 
+  const saved = useSelector((state) => state.news.favs);
+
   if (isLoading) return <Spinner />;
   if (data.data.articles.length === 0) return null;
   return (
@@ -39,6 +42,11 @@ const Template = ({ title, category }) => {
             <NewsCard
               news={news}
               className="sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6"
+              isFavourite={() =>
+                saved.filter((x) => {
+                  return x.article.url === news.url;
+                })?.length >= 1
+              }
             />
           </div>
         ))}

@@ -3,12 +3,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
+import { useSelector } from "react-redux";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
   const location = useLocation();
   const isTopHeadlinesActive = location.pathname.startsWith("/top-headlines");
   const navigate = useNavigate();
+  const token = useSelector((state) => state.auth.token);
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
@@ -39,6 +41,16 @@ function Header(props) {
         >
           Top Headlines
         </NavLink>
+        {token && (
+          <NavLink
+            to="/favourites"
+            className={({ isActive }) =>
+              `font-medium ${isActive ? "text-primary" : ""} hover:text-primary`
+            }
+          >
+            Saved Articles
+          </NavLink>
+        )}
         {/* <NavLink
           to="/weather"
           className={({ isActive }) =>
@@ -104,6 +116,19 @@ function Header(props) {
           >
             Top Headlines
           </NavLink>
+          {token && (
+            <NavLink
+              to="/favourites"
+              onClick={() => setHamMenu("hidden")}
+              className={({ isActive }) =>
+                `font-medium m-3 p-3 ${
+                  isActive ? "text-primary" : ""
+                } hover:bg-gray-50 block rounded-lg`
+              }
+            >
+              Saved Articles
+            </NavLink>
+          )}
           {/* <a
             href="#"
             className="font-medium m-3 p-3 hover:bg-gray-50 block rounded-lg"

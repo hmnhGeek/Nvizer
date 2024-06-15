@@ -17,3 +17,19 @@ export const saveNews = createAsyncThunk(
     return response;
   }
 );
+
+export const getSavedArticles = createAsyncThunk(
+  "getSavedArticles",
+  async ({ email, token }) => {
+    const response = await authApi.get(
+      `/news/get_saved_articles?user=${email}`,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  }
+);

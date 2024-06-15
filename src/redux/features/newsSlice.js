@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { newsInitialState } from "../initialStates/newsInitialState";
-import { saveNews } from "../actions/newsActions";
+import { getSavedArticles, saveNews } from "../actions/newsActions";
 
 export const newsSlice = createSlice({
   name: "newsSlice",
@@ -11,6 +11,12 @@ export const newsSlice = createSlice({
       //
     });
     builder.addCase(saveNews.rejected, (state, action) => {});
+
+    builder.addCase(getSavedArticles.pending, (state, action) => {});
+    builder.addCase(getSavedArticles.fulfilled, (state, action) => {
+      state.favs = action.payload.data;
+    });
+    builder.addCase(getSavedArticles.rejected, (state, action) => {});
   },
 });
 
