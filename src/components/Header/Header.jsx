@@ -1,9 +1,10 @@
-import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faU, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
 import { useSelector } from "react-redux";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
@@ -11,6 +12,7 @@ function Header(props) {
   const isTopHeadlinesActive = location.pathname.startsWith("/top-headlines");
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
+  const email = useSelector((state) => state.auth.username);
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
@@ -61,15 +63,23 @@ function Header(props) {
         </NavLink> */}
       </div>
       <div className="flex gap-2">
-        <button
-          onClick={() => navigate("/login")}
-          className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600"
-        >
-          Login
-        </button>
-        <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
-          Sign Up
-        </button>
+        {!token ? (
+          <>
+            <button
+              onClick={() => navigate("/login")}
+              className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600"
+            >
+              Login
+            </button>
+            <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
+              Sign Up
+            </button>
+          </>
+        ) : (
+          <div className="hidden md:block gap-2 px-6">
+            <FontAwesomeIcon icon={faUser} /> &nbsp; {email}
+          </div>
+        )}
       </div>
       <button className="flex md:hidden" onClick={() => setHamMenu("")}>
         <FontAwesomeIcon className="text-gray-600" icon={faBars} />
@@ -137,18 +147,27 @@ function Header(props) {
           </a> */}
         </div>
         <div className="h-[1px] bg-gray-300"></div>
-        <button
-          onClick={() => {
-            navigate("/login");
-            setHamMenu("hidden");
-          }}
-          className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50"
-        >
-          Login
-        </button>
-        <button className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
-          Sign Up
-        </button>
+        {!token && (
+          <button
+            onClick={() => {
+              navigate("/login");
+              setHamMenu("hidden");
+            }}
+            className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50"
+          >
+            Login
+          </button>
+        )}
+        {!token && (
+          <button className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+            Sign Up
+          </button>
+        )}
+        {token && (
+          <div className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+            <FontAwesomeIcon icon={faUser} /> &nbsp; {email}
+          </div>
+        )}
       </div>
     </nav>
   );
