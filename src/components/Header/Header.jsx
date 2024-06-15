@@ -5,6 +5,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
 import { useSelector } from "react-redux";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+import ProfileDropdown from "./ProfileDropdown";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
@@ -77,7 +78,7 @@ function Header(props) {
           </>
         ) : (
           <div className="hidden md:block gap-2 px-6">
-            <FontAwesomeIcon icon={faUser} /> &nbsp; {email}
+            <ProfileDropdown />
           </div>
         )}
       </div>
