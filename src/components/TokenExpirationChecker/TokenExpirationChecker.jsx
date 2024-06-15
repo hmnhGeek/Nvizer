@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import cookie from "js-cookie";
 import { oauthLogout } from "../../redux/actions/authActions";
+import toast, { Toaster } from "react-hot-toast";
 
 const TokenExpirationChecker = (props) => {
   let { minutes } = props;
@@ -14,6 +15,7 @@ const TokenExpirationChecker = (props) => {
       if (decodedToken.exp * 1000 < Date.now()) {
         cookie.set("apiError", "Token has expired, please login again!");
         dispatch(oauthLogout(token));
+        toast.error("Session has expired. Please login again.");
         // window.location.replace("/login");
       }
     }
@@ -39,7 +41,7 @@ const TokenExpirationChecker = (props) => {
     }
   }, [token]);
 
-  return null;
+  return <Toaster />;
 };
 
 export default TokenExpirationChecker;

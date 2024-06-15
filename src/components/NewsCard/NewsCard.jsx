@@ -1,6 +1,11 @@
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useSelector } from "react-redux";
 
 const NewsCard = ({ news, onHover, onLeave }) => {
+  const token = useSelector((state) => state.auth.token);
+
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.slice(0, maxLength) + "...";
@@ -34,6 +39,14 @@ const NewsCard = ({ news, onHover, onLeave }) => {
         <span className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
           {news.source.name}
         </span>
+        {token && (
+          <span className="absolute top-2 left-2 text-yellow-500 text-lg">
+            <FontAwesomeIcon
+              // className="text-gray-600 hover:text-red-800"
+              icon={faStar}
+            />
+          </span>
+        )}
       </div>
       <div className="p-4">
         <h2
