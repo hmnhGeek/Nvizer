@@ -1,13 +1,14 @@
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
   const location = useLocation();
   const isTopHeadlinesActive = location.pathname.startsWith("/top-headlines");
+  const navigate = useNavigate();
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
@@ -48,7 +49,10 @@ function Header(props) {
         </NavLink> */}
       </div>
       <div className="flex gap-2">
-        <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
+        <button
+          onClick={() => navigate("/login")}
+          className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600"
+        >
           Login
         </button>
         <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
@@ -108,7 +112,13 @@ function Header(props) {
           </a> */}
         </div>
         <div className="h-[1px] bg-gray-300"></div>
-        <button className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+        <button
+          onClick={() => {
+            navigate("/login");
+            setHamMenu("hidden");
+          }}
+          className="mt-6 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50"
+        >
           Login
         </button>
         <button className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">

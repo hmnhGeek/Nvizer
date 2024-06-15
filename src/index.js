@@ -21,6 +21,7 @@ import ScienceHeadlines from "./components/TopHeadlines/ScienceHeadlines";
 import SportsHeadlines from "./components/TopHeadlines/SportsHeadlines";
 import HealthHeadlines from "./components/TopHeadlines/HealthHeadlines";
 import { QueryClientProvider, QueryClient } from "react-query";
+import LoginPage from "./pages/LoginPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
@@ -38,6 +39,7 @@ const router = createBrowserRouter(
         <Route path="science" element={<ScienceHeadlines />} />
         <Route path="health" element={<HealthHeadlines />} />
       </Route>
+      <Route path="login" element={<LoginPage />} />
     </Route>
   )
 );
