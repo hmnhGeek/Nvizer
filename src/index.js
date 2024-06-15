@@ -52,7 +52,7 @@ root.render(
   <React.StrictMode>
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-orange-50 to-transparent">
       <ReduxProvider>
-        <TokenExpirationChecker minutues={1} />
+        <TokenExpirationChecker minutes={1} />
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} />
         </QueryClientProvider>

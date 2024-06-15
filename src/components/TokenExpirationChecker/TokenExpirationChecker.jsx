@@ -1,16 +1,20 @@
 import { useEffect } from "react";
-import { connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import cookie from "js-cookie";
+import { oauthLogout } from "../../redux/actions/authActions";
 
 const TokenExpirationChecker = (props) => {
-  let { token, minutes } = props;
+  let { minutes } = props;
+  const token = useSelector((state) => state.auth.token);
+  const dispatch = useDispatch();
 
   const checkTokenExpiration = () => {
     if (token) {
       const decodedToken = parseJwt(token);
       if (decodedToken.exp * 1000 < Date.now()) {
         cookie.set("apiError", "Token has expired, please login again!");
-        window.location.replace("/login");
+        dispatch(oauthLogout(token));
+        // window.location.replace("/login");
       }
     }
   };
@@ -38,10 +42,4 @@ const TokenExpirationChecker = (props) => {
   return null;
 };
 
-const mapStateToProps = (state) => {
-  return {
-    token: state.auth.token,
-  };
-};
-
-export default connect(mapStateToProps, null)(TokenExpirationChecker);
+export default TokenExpirationChecker;

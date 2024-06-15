@@ -24,3 +24,13 @@ export const oauthLogin = createAsyncThunk(
     return response;
   }
 );
+
+export const oauthLogout = createAsyncThunk("oauthLogout", async (token) => {
+  const headers = {
+    accept: "application/json",
+    token: token,
+  };
+
+  const response = await authApi.post("/users/logout", {}, { headers });
+  return response;
+});

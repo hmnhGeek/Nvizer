@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { oauthLogin } from "../redux/actions/authActions";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -10,6 +11,17 @@ const LoginPage = () => {
   });
 
   const dispatch = useDispatch();
+
+  /**
+   * Logic to be added wherever you want to check logged in state of a user
+   */
+  const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  }, [token]);
 
   const login = () => {
     dispatch(oauthLogin(credentials));
