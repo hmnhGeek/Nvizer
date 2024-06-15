@@ -22,6 +22,8 @@ import SportsHeadlines from "./components/TopHeadlines/SportsHeadlines";
 import HealthHeadlines from "./components/TopHeadlines/HealthHeadlines";
 import { QueryClientProvider, QueryClient } from "react-query";
 import LoginPage from "./pages/LoginPage";
+import TokenExpirationChecker from "./components/TokenExpirationChecker/TokenExpirationChecker";
+import { ReduxProvider } from "./redux/ReduxProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
@@ -49,9 +51,12 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-orange-50 to-transparent">
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <ReduxProvider>
+        <TokenExpirationChecker minutues={1} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ReduxProvider>
     </div>
   </React.StrictMode>
 );
