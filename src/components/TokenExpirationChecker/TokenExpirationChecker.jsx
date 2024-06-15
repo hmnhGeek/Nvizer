@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cookie from "js-cookie";
 import { oauthLogout } from "../../redux/actions/authActions";
 import toast, { Toaster } from "react-hot-toast";
+import { parseJwt } from "../../util";
 
 const TokenExpirationChecker = (props) => {
   let { minutes } = props;
@@ -16,22 +17,8 @@ const TokenExpirationChecker = (props) => {
         cookie.set("apiError", "Token has expired, please login again!");
         dispatch(oauthLogout(token));
         toast.error("Session has expired. Please login again.");
-        // window.location.replace("/login");
       }
     }
-  };
-
-  const parseJwt = (token) => {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-        .join("")
-    );
-
-    return JSON.parse(jsonPayload);
   };
 
   useEffect(() => {

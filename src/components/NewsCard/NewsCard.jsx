@@ -2,11 +2,14 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { saveNews } from "../../redux/actions/newsActions";
 
 const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
   const token = useSelector((state) => state.auth.token);
+  const email = useSelector((state) => state.auth.username);
   const [isFav, setIsFav] = useState(isFavourite);
+  const dispatch = useDispatch();
 
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
@@ -22,6 +25,11 @@ const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
       return truncated + "...";
     }
     return truncated;
+  };
+
+  const toggleSave = () => {
+    setIsFav((x) => !x);
+    dispatch(saveNews({ news, email, token }));
   };
 
   return (
@@ -46,7 +54,7 @@ const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
           >
             <FontAwesomeIcon
               icon={isFav ? faStar : faRegularStar}
-              onClick={() => setIsFav((x) => !x)}
+              onClick={toggleSave}
             />
           </span>
         )}
