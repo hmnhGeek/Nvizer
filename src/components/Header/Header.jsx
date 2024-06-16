@@ -1,7 +1,6 @@
 import {
   faBars,
   faRightFromBracket,
-  faU,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
