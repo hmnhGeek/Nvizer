@@ -1,11 +1,17 @@
-import { faBars, faU, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faRightFromBracket,
+  faU,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../images/logo.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 import ProfileDropdown from "./ProfileDropdown";
+import { oauthLogout } from "../../redux/actions/authActions";
 
 function Header(props) {
   const [hamMenu, setHamMenu] = useState("hidden");
@@ -14,6 +20,7 @@ function Header(props) {
   const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
   const email = useSelector((state) => state.auth.username);
+  const dispatch = useDispatch();
 
   return (
     <nav className="p-3 flex bg-white justify-between items-center">
@@ -95,6 +102,11 @@ function Header(props) {
             className="flex gap-2 items-center"
           >
             {/* <img className="object-cover max-w-12 max-h-12" /> */}
+            <img
+              src={logo}
+              alt="brand-logo"
+              className="object-cover max-w-12 max-h-12"
+            />
             <span className="text-lg font-medium font-display">Nvizer</span>
           </NavLink>
           <button
@@ -165,8 +177,21 @@ function Header(props) {
           </button>
         )}
         {token && (
-          <div className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
-            <FontAwesomeIcon icon={faUser} /> &nbsp; {email}
+          <div>
+            <div className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+              <FontAwesomeIcon icon={faUser} /> &nbsp; {email}
+            </div>
+            <div className="mt-6 px-6 w-full flex gap-0 items-center rounded-lg hover:bg-gray-50">
+              <button
+                onClick={() => {
+                  dispatch(oauthLogout(token));
+                  setHamMenu("hidden");
+                }}
+                className="w-full flex gap-2 items-center rounded-lg hover:bg-gray-50 hover:text-red-600"
+              >
+                <FontAwesomeIcon icon={faRightFromBracket} /> &nbsp; Logout
+              </button>
+            </div>
           </div>
         )}
       </div>
