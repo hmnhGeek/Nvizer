@@ -31,7 +31,7 @@ const SavedArticles = () => {
         </div>
         <div className="flex flex-wrap justify-center items-center m-8 overflow-x:hidden">
           {saved.map((news, index) => (
-            <div key={index}>
+            <div key={news?._id}>
               <NewsCard
                 news={news.article}
                 className="sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6"

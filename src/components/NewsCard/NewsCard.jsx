@@ -1,14 +1,18 @@
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeArticle, saveNews } from "../../redux/actions/newsActions";
 
 const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
   const token = useSelector((state) => state.auth.token);
   const email = useSelector((state) => state.auth.username);
+
+  // update the isFav as soon as it changes
   const [isFav, setIsFav] = useState(isFavourite);
+  useEffect(() => setIsFav(isFavourite), [isFavourite]);
+
   const dispatch = useDispatch();
 
   const truncateText = (text, maxLength) => {
