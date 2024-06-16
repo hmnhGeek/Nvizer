@@ -21,6 +21,10 @@ import ScienceHeadlines from "./components/TopHeadlines/ScienceHeadlines";
 import SportsHeadlines from "./components/TopHeadlines/SportsHeadlines";
 import HealthHeadlines from "./components/TopHeadlines/HealthHeadlines";
 import { QueryClientProvider, QueryClient } from "react-query";
+import LoginPage from "./pages/LoginPage";
+import TokenExpirationChecker from "./components/TokenExpirationChecker/TokenExpirationChecker";
+import { ReduxProvider } from "./redux/ReduxProvider";
+import SavedArticles from "./pages/SavedArticles";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const router = createBrowserRouter(
@@ -38,6 +42,8 @@ const router = createBrowserRouter(
         <Route path="science" element={<ScienceHeadlines />} />
         <Route path="health" element={<HealthHeadlines />} />
       </Route>
+      <Route path="login" element={<LoginPage />} />
+      <Route path="favourites" element={<SavedArticles />} />
     </Route>
   )
 );
@@ -47,9 +53,12 @@ const queryClient = new QueryClient();
 root.render(
   <React.StrictMode>
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-orange-50 to-transparent">
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-      </QueryClientProvider>
+      <ReduxProvider>
+        <TokenExpirationChecker minutes={1} />
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+        </QueryClientProvider>
+      </ReduxProvider>
     </div>
   </React.StrictMode>
 );

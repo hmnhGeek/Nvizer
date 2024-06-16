@@ -1,6 +1,16 @@
-import React from "react";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { removeArticle, saveNews } from "../../redux/actions/newsActions";
 
-const NewsCard = ({ news, onHover, onLeave }) => {
+const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
+  const token = useSelector((state) => state.auth.token);
+  const email = useSelector((state) => state.auth.username);
+  const [isFav, setIsFav] = useState(isFavourite);
+  const dispatch = useDispatch();
+
   const truncateText = (text, maxLength) => {
     if (text.length > maxLength) {
       return text.slice(0, maxLength) + "...";
@@ -17,10 +27,17 @@ const NewsCard = ({ news, onHover, onLeave }) => {
     return truncated;
   };
 
+  const toggleSave = () => {
+    let wasFav = isFav;
+    setIsFav((x) => !x);
+
+    if (!wasFav) dispatch(saveNews({ news, email, token }));
+    else dispatch(removeArticle({ news, email, token }));
+  };
+
   return (
     <div
-      className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 cursor-pointer m-2"
-      onClick={() => window.open(news.url, "_blank")}
+      className="max-w-sm rounded overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300 m-2"
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       style={{ height: "22.75rem" }} // Set a fixed height
@@ -34,8 +51,21 @@ const NewsCard = ({ news, onHover, onLeave }) => {
         <span className="absolute top-2 right-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">
           {news.source.name}
         </span>
+        {token && (
+          <span
+            className={`absolute top-2 left-2 cursor-pointer text-yellow-500 bg-black text-lg rounded-full py-2 px-3`}
+          >
+            <FontAwesomeIcon
+              icon={isFav ? faStar : faRegularStar}
+              onClick={toggleSave}
+            />
+          </span>
+        )}
       </div>
-      <div className="p-4">
+      <div
+        onClick={() => window.open(news.url, "_blank")}
+        className="p-4 cursor-pointer"
+      >
         <h2
           className="font-bold text-xl mb-2 overflow-hidden whitespace-nowrap"
           title={news.title}

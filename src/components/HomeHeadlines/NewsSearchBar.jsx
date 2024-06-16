@@ -55,7 +55,6 @@ const NewsSearchBar = (props) => {
 
   return (
     <>
-      <Toaster />
       <div className="flex relative bg-transparent p-2 rounded border-2 justify-center items-center border-gray-400">
         <input
           type="text"

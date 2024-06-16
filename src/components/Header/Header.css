@@ -1,0 +1,33 @@
+/* ./src/Header.css */
+.dropdown-profile {
+  position: absolute;
+  top: 3rem; /* Adjusted top position */
+  right: 1.5rem;
+  width: 160px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Darker shadow around all borders */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  transform: translateY(-10px);
+  pointer-events: none;
+}
+
+.dropdown-profile.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.dropdown-profile::before {
+  position: absolute;
+  top: -0.5rem;
+  right: 1.5rem;
+  width: 15px;
+  height: 15px;
+  background-color: white;
+  content: "";
+  transform: rotate(45deg);
+  box-shadow: -2px -2px 2px rgba(0, 0, 0, 0.08); /* Subtle shadow for the arrow */
+}

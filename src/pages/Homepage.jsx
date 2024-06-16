@@ -5,11 +5,13 @@ import NewsSearchBar from "../components/HomeHeadlines/NewsSearchBar";
 import NewsCard from "../components/NewsCard/NewsCard";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 const Homepage = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [clearSearch, setClearSearch] = useState(false);
+  const saved = useSelector((state) => state.news.favs);
 
   const clearSearchFn = (e) => {
     e.preventDefault();
@@ -56,6 +58,11 @@ const Homepage = () => {
                 <NewsCard
                   news={news}
                   className="sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/6"
+                  isFavourite={() =>
+                    saved.filter((x) => {
+                      return x.article.url === news.url;
+                    })?.length >= 1
+                  }
                 />
               </div>
             ))}

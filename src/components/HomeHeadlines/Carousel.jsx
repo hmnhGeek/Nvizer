@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import NewsCard from "../NewsCard/NewsCard";
+import { useSelector } from "react-redux";
 
 const Carousel = ({ articles }) => {
   const carouselRef = useRef(null);
   let scrollInterval = null; // Declare scrollInterval variable
   let direction = 1; // Direction of scrolling
+
+  const saved = useSelector((state) => state.news.favs);
 
   const startScroll = () => {
     scrollInterval = setInterval(() => {
@@ -48,7 +51,14 @@ const Carousel = ({ articles }) => {
     >
       {articles.map((news, index) => (
         <div key={index} className="inline-block">
-          <NewsCard news={news} />
+          <NewsCard
+            news={news}
+            isFavourite={() =>
+              saved.filter((x) => {
+                return x.article.url === news.url;
+              })?.length >= 1
+            }
+          />
         </div>
       ))}
     </div>
