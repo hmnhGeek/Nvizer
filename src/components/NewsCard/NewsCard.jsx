@@ -3,7 +3,7 @@ import { faStar as faRegularStar } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveNews } from "../../redux/actions/newsActions";
+import { removeArticle, saveNews } from "../../redux/actions/newsActions";
 
 const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
   const token = useSelector((state) => state.auth.token);
@@ -28,8 +28,11 @@ const NewsCard = ({ news, onHover, onLeave, isFavourite = false }) => {
   };
 
   const toggleSave = () => {
+    let wasFav = isFav;
     setIsFav((x) => !x);
-    dispatch(saveNews({ news, email, token }));
+
+    if (!wasFav) dispatch(saveNews({ news, email, token }));
+    else dispatch(removeArticle({ news, email, token }));
   };
 
   return (

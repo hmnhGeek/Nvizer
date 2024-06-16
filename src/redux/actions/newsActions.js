@@ -33,3 +33,20 @@ export const getSavedArticles = createAsyncThunk(
     return response;
   }
 );
+
+export const removeArticle = createAsyncThunk(
+  "removeArticle",
+  async ({ news, email, token }) => {
+    const response = await authApi.post(
+      `/news/remove_article?user=${email}`,
+      news,
+      {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response;
+  }
+);
