@@ -6,6 +6,14 @@ import { parseJwt } from "../../util";
 export const authSlice = createSlice({
   name: "authSlice",
   initialState: authInitialState,
+  reducers: {
+    clearLoginErrorIfAny: (state, action) => {
+      state.error = null;
+    },
+    clearAuthSuccessMsgIfAny: (state, action) => {
+      state.successMsg = null;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(oauthLogin.pending, (state, action) => {
       state.isLoading = true;
@@ -15,12 +23,14 @@ export const authSlice = createSlice({
       state.error = null;
       state.token = action.payload.data.access_token;
       state.username = parseJwt(action.payload.data.access_token).sub;
+      state.successMsg = "Successfully logged in.";
     });
     builder.addCase(oauthLogin.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = "There is some error";
+      state.error = "Unable to login. Invalid credentials.";
       state.token = null;
       state.username = null;
+      state.successMsg = null;
     });
 
     builder.addCase(oauthLogout.pending, (state, action) => {
@@ -31,14 +41,18 @@ export const authSlice = createSlice({
       state.error = null;
       state.token = null;
       state.username = null;
+      state.successMsg = "Successfully logged out.";
     });
     builder.addCase(oauthLogout.rejected, (state, action) => {
       state.isLoading = false;
       state.error = "There is some error";
       state.token = null;
       state.username = null;
+      state.successMsg = null;
     });
   },
 });
 
+export const { clearLoginErrorIfAny, clearAuthSuccessMsgIfAny } =
+  authSlice.actions;
 export default authSlice.reducer;

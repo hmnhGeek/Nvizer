@@ -3,6 +3,11 @@ import logo from "../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { oauthLogin } from "../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import {
+  clearAuthSuccessMsgIfAny,
+  clearLoginErrorIfAny,
+} from "../redux/features/authSlice";
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -16,12 +21,29 @@ const LoginPage = () => {
    * Logic to be added wherever you want to check logged in state of a user
    */
   const token = useSelector((state) => state.auth.token);
+  const authError = useSelector((state) => state.auth.error);
+  const authSuccess = useSelector((state) => state.auth.successMsg);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (token) {
       navigate("/favourites");
     }
   }, [token]);
+
+  // Check if there is any error related to login. If yes, show it & clear the message from store.
+  useEffect(() => {
+    if (authError) toast.error(authError);
+    dispatch(clearLoginErrorIfAny());
+  }, [authError]);
+
+  useEffect(() => {
+    if (authSuccess) {
+      // providing a hardcoded id to prevent duplicate toasts
+      toast.success(authSuccess, { id: 1 });
+    }
+    dispatch(clearAuthSuccessMsgIfAny());
+  }, [authSuccess]);
 
   const login = () => {
     dispatch(oauthLogin(credentials));

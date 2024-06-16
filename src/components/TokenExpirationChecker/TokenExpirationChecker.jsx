@@ -28,7 +28,7 @@ const TokenExpirationChecker = (props) => {
     }
   }, [token]);
 
-  return <Toaster />;
+  return null;
 };
 
 export default TokenExpirationChecker;
