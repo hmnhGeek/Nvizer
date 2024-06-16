@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getSavedArticles } from "../redux/actions/newsActions";
 import NewsCard from "../components/NewsCard/NewsCard";
+import NoSavedArticles from "../components/NoSavedArticles/NoSavedArticles";
 
 const SavedArticles = () => {
   const token = useSelector((state) => state.auth.token);
@@ -19,7 +20,7 @@ const SavedArticles = () => {
     }
   }, [token]);
 
-  if (saved)
+  if (saved && saved.length > 0)
     return (
       <div
         id="general-headlines-container"
@@ -41,6 +42,8 @@ const SavedArticles = () => {
         </div>
       </div>
     );
+
+  return <NoSavedArticles />;
 };
 
 export default SavedArticles;
