@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { oauthLogin } from "../redux/actions/authActions";
+import { oauthLogin, oauthSignup } from "../redux/actions/authActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
@@ -9,10 +9,11 @@ import {
   clearLoginErrorIfAny,
 } from "../redux/features/authSlice";
 
-const LoginPage = () => {
+const SignupPage = () => {
   const [credentials, setCredentials] = useState({
     email: null,
     password: null,
+    confirmPassword: null,
   });
 
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const LoginPage = () => {
     }
   }, [token]);
 
-  // Check if there is any error related to login. If yes, show it & clear the message from store.
+  // Check if there is any error related to signup. If yes, show it & clear the message from store.
   useEffect(() => {
     if (authError) toast.error(authError);
     dispatch(clearLoginErrorIfAny());
@@ -40,29 +41,37 @@ const LoginPage = () => {
   useEffect(() => {
     if (authSuccess) {
       // providing a hardcoded id to prevent duplicate toasts
-      toast.success(authSuccess, { id: 1 });
+      toast.success(authSuccess, { id: 2 });
+
+      // login the new user as the signup was successful
+      dispatch(oauthLogin(credentials));
     }
     dispatch(clearAuthSuccessMsgIfAny());
   }, [authSuccess]);
 
-  const login = () => {
-    dispatch(oauthLogin(credentials));
+  const signup = () => {
+    let { password, confirmPassword } = credentials;
+    if (password === confirmPassword) dispatch(oauthSignup(credentials));
+    else
+      toast.error(
+        "Confirm password is not same as entered password. Please check!"
+      );
   };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-74px)]">
       <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         <div className="flex flex-col justify-center p-8 md:p-14">
-          <span className="mb-3 text-4xl font-bold">Welcome Back!</span>
+          <span className="mb-3 text-4xl font-bold">Welcome!</span>
           <span className="font-light text-gray-400 mb-8">
-            Welcome back! Please enter your credentials.
+            Welcome! Please enter an email and password.
           </span>
           <div className="py-4">
             <span className="mb-2 text-md">Email</span>
             <input
               type="email"
               className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              placeholder="Enter your email"
+              placeholder="Enter an email"
               onChange={(e) =>
                 setCredentials((x) => ({ ...x, email: e.target.value }))
               }
@@ -75,20 +84,34 @@ const LoginPage = () => {
               onChange={(e) =>
                 setCredentials((x) => ({ ...x, password: e.target.value }))
               }
-              placeholder="Enter your password"
+              placeholder="Enter a password"
+              className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+            />
+          </div>
+          <div className="py-4">
+            <span className="mb-2 text-md">Confirm Password</span>
+            <input
+              type="password"
+              onChange={(e) =>
+                setCredentials((x) => ({
+                  ...x,
+                  confirmPassword: e.target.value,
+                }))
+              }
+              placeholder="Confirm password"
               className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
             />
           </div>
           <button
-            onClick={login}
+            onClick={signup}
             className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
           >
-            Log In
+            Sign up
           </button>
           <div className="text-center text-gray-400">
-            Don't have an account? &nbsp;
-            <NavLink to={"/signup"}>
-              <span className="font-bold text-black">Sign up for free</span>
+            Already have an account? &nbsp;
+            <NavLink to={"/login"}>
+              <span className="font-bold text-black">Login here!</span>
             </NavLink>
           </div>
         </div>
@@ -104,4 +127,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default SignupPage;
