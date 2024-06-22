@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { oauthLogin } from "../redux/actions/authActions";
 import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useForm } from "react-hook-form";
 import {
   clearAuthSuccessMsgIfAny,
   clearLoginErrorIfAny,
@@ -16,6 +17,11 @@ const LoginPage = () => {
   });
 
   const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   /**
    * Logic to be added wherever you want to check logged in state of a user
@@ -23,6 +29,7 @@ const LoginPage = () => {
   const token = useSelector((state) => state.auth.token);
   const authError = useSelector((state) => state.auth.error);
   const authSuccess = useSelector((state) => state.auth.successMsg);
+  const isSubmitting = useSelector((state) => state.auth.isLoading);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,46 +52,54 @@ const LoginPage = () => {
     dispatch(clearAuthSuccessMsgIfAny());
   }, [authSuccess]);
 
-  const login = () => {
-    dispatch(oauthLogin(credentials));
+  const login = (formData) => {
+    dispatch(oauthLogin(formData));
   };
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-74px)]">
       <div className="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0">
         <div className="flex flex-col justify-center p-8 md:p-14">
-          <span className="mb-3 text-4xl font-bold">Welcome Back!</span>
+          <span className="mb-3 text-4xl font-bold">Log In</span>
           <span className="font-light text-gray-400 mb-8">
             Welcome back! Please enter your credentials.
           </span>
-          <div className="py-4">
-            <span className="mb-2 text-md">Email</span>
-            <input
-              type="email"
-              className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-              placeholder="Enter your email"
-              onChange={(e) =>
-                setCredentials((x) => ({ ...x, email: e.target.value }))
-              }
-            />
-          </div>
-          <div className="py-4">
-            <span className="mb-2 text-md">Password</span>
-            <input
-              type="password"
-              onChange={(e) =>
-                setCredentials((x) => ({ ...x, password: e.target.value }))
-              }
-              placeholder="Enter your password"
-              className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
-            />
-          </div>
-          <button
-            onClick={login}
-            className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
-          >
-            Log In
-          </button>
+          <form onSubmit={handleSubmit(login)} noValidate>
+            <div className="py-1">
+              <span className="mb-2 text-md">Email</span>
+              <input
+                type="email"
+                id="email"
+                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+                placeholder="Enter your email"
+                {...register("email", {
+                  required: "Email ID is required!",
+                  pattern: {
+                    value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+                    message: "Invalid email ID!",
+                  },
+                })}
+              />
+            </div>
+            <p className="mt-1 text-red-500">{errors?.email?.message}</p>
+            <div className="py-1">
+              <span className="mb-2 text-md">Password</span>
+              <input
+                type="password"
+                id="password"
+                {...register("password", { required: "Password is required!" })}
+                placeholder="Enter your password"
+                className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
+              />
+              <p className="mt-1 text-red-500">{errors?.password?.message}</p>
+            </div>
+            <button
+              disabled={isSubmitting}
+              className="w-full mt-3 disabled:opacity-50 bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+            >
+              {!isSubmitting ? "Log In" : "Please wait..."}
+            </button>
+          </form>
           <div className="text-center text-gray-400">
             Don't have an account? &nbsp;
             <NavLink to={"/signup"}>
