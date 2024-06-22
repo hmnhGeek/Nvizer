@@ -87,7 +87,31 @@ const LoginPage = () => {
               <input
                 type="password"
                 id="password"
-                {...register("password", { required: "Password is required!" })}
+                {...register("password", {
+                  required: "Password is required!",
+                  minLength: {
+                    value: 8,
+                    message: "Password must be at least 8 characters long!",
+                  },
+                  maxLength: {
+                    value: 128,
+                    message: "Password must be less than 128 characters long!",
+                  },
+                  validate: {
+                    hasUpperCase: (value) =>
+                      /[A-Z]/.test(value) ||
+                      "Password must contain at least one uppercase letter!",
+                    hasLowerCase: (value) =>
+                      /[a-z]/.test(value) ||
+                      "Password must contain at least one lowercase letter!",
+                    hasDigit: (value) =>
+                      /\d/.test(value) ||
+                      "Password must contain at least one digit!",
+                    hasSpecialChar: (value) =>
+                      /[!@#$%^&*(),.?":{}|<>]/.test(value) ||
+                      "Password must contain at least one special character!",
+                  },
+                })}
                 placeholder="Enter your password"
                 className="w-full p-2 border border-gray-300 rounded-md placeholder:font-light placeholder:text-gray-500"
               />
