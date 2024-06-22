@@ -24,6 +24,7 @@ const SignupPage = () => {
   const token = useSelector((state) => state.auth.token);
   const authError = useSelector((state) => state.auth.error);
   const authSuccess = useSelector((state) => state.auth.successMsg);
+  const isSubmitting = useSelector((state) => state.auth.isLoading);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -104,9 +105,10 @@ const SignupPage = () => {
           </div>
           <button
             onClick={signup}
-            className="w-full bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
+            disabled={isSubmitting}
+            className="w-full disabled:opacity-50 bg-black text-white p-2 rounded-lg mb-6 hover:bg-white hover:text-black hover:border hover:border-gray-300"
           >
-            Sign up
+            {!isSubmitting ? "Signup" : "Please wait..."}
           </button>
           <div className="text-center text-gray-400">
             Already have an account? &nbsp;
