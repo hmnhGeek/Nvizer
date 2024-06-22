@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { authInitialState } from "../initialStates/authInitialState";
-import { oauthLogin, oauthLogout } from "../actions/authActions";
+import { oauthLogin, oauthLogout, oauthSignup } from "../actions/authActions";
 import { parseJwt } from "../../util";
 
 export const authSlice = createSlice({
@@ -15,6 +15,22 @@ export const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(oauthSignup.pending, (state, action) => {
+      state.isLoading = true;
+      state.error = null;
+      state.token = null;
+      state.username = null;
+      state.successMsg = null;
+    });
+    builder.addCase(oauthSignup.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.successMsg = "Successfully signed up.";
+    });
+    builder.addCase(oauthSignup.rejected, (state, action) => {
+      state.isLoading = false;
+      state.error = "Unable to signup.";
+    });
+
     builder.addCase(oauthLogin.pending, (state, action) => {
       state.isLoading = true;
     });

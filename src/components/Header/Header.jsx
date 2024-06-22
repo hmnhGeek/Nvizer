@@ -78,7 +78,10 @@ function Header(props) {
             >
               Login
             </button>
-            <button className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600">
+            <button
+              onClick={() => navigate("/signup")}
+              className="hidden md:flex gap-2 items-center border border-gray-400 px-6 py-2 rounded-lg hover:border-gray-600"
+            >
               Sign Up
             </button>
           </>
@@ -171,7 +174,13 @@ function Header(props) {
           </button>
         )}
         {!token && (
-          <button className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50">
+          <button
+            onClick={() => {
+              navigate("/signup");
+              setHamMenu("hidden");
+            }}
+            className="mt-2 w-full flex gap-2 items-center px-6 py-4 rounded-lg hover:bg-gray-50"
+          >
             Sign Up
           </button>
         )}
