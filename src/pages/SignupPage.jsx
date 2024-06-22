@@ -42,6 +42,8 @@ const SignupPage = () => {
     if (authSuccess) {
       // providing a hardcoded id to prevent duplicate toasts
       toast.success(authSuccess, { id: 2 });
+
+      // login the new user as the signup was successful
       dispatch(oauthLogin(credentials));
     }
     dispatch(clearAuthSuccessMsgIfAny());
