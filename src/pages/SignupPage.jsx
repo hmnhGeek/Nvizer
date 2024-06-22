@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { oauthSignup } from "../redux/actions/authActions";
+import { oauthLogin, oauthSignup } from "../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
@@ -41,7 +41,8 @@ const SignupPage = () => {
   useEffect(() => {
     if (authSuccess) {
       // providing a hardcoded id to prevent duplicate toasts
-      toast.success(authSuccess, { id: 1 });
+      toast.success(authSuccess, { id: 2 });
+      dispatch(oauthLogin(credentials));
     }
     dispatch(clearAuthSuccessMsgIfAny());
   }, [authSuccess]);
