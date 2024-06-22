@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import logo from "../images/logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { oauthLogin } from "../redux/actions/authActions";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import {
   clearAuthSuccessMsgIfAny,
@@ -87,7 +87,9 @@ const LoginPage = () => {
           </button>
           <div className="text-center text-gray-400">
             Don't have an account? &nbsp;
-            <span className="font-bold text-black">Sign up for free</span>
+            <NavLink to={"/signup"}>
+              <span className="font-bold text-black">Sign up for free</span>
+            </NavLink>
           </div>
         </div>
         <div className="relative">
